@@ -140,7 +140,14 @@ class Home extends Component {
         return (
           <Col key={product.product_id} md={{ span: 4 }}>
             <Card className="mb-3">
-              <LinkContainer to={{ pathname: '/products/'+product.product_id, search: ''}}>
+              <LinkContainer 
+                to={{ 
+                  pathname: '/products/'+product.product_id, 
+                  search: '',
+                  state: {
+                    product
+                  }
+                }}>
                 <Card.Body>
                   <Card.Img 
                     variant="top" 

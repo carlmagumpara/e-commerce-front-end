@@ -26,23 +26,30 @@ class Cart extends Component {
 
   componentDidMount() {
     const { match: { params }} = this.props;
-    axios({
-      method: 'GET',
-      url: 'https://e-commerce-zan3.herokuapp.com/api/products/'+params.product_id,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) =>  {
-      console.log(response.data);
+    console.log();
+    if (this.props.location.state && this.props.location.state.product) {
       this.setState({
-        product: response.data
+        product: this.props.location.state.product
       });
-    })
-    .catch(error =>  {
-      console.log(error);
-    });
+    } else {
+      axios({
+        method: 'GET',
+        url: 'https://e-commerce-zan3.herokuapp.com/api/products/'+params.product_id,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) =>  {
+        console.log(response.data);
+        this.setState({
+          product: response.data
+        });
+      })
+      .catch(error =>  {
+        console.log(error);
+      });
+    }
   }
 
   render() {
