@@ -3,10 +3,7 @@ import {
   combineReducers, 
   applyMiddleware 
 } from 'redux';
-import { 
-  CookieStorage 
-} from 'redux-persist-cookie-storage';
-import Cookies from 'cookies-js';
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import thunk from 'redux-thunk';
 import { 
   persistStore, 
@@ -21,7 +18,7 @@ const appReducer = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage: new CookieStorage(Cookies),
+  storage,
   blacklist: []
 };
 

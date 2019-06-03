@@ -8,9 +8,14 @@ import {
   Container,
   Row,
   Col,
-  Card
+  Card,
+  Button,
+  Modal
 } from 'react-bootstrap';
 import axios from 'axios';
+import {
+  truncate
+} from './Utils';
 
 let queryString = require('query-string');
 
@@ -35,6 +40,7 @@ class Home extends Component {
       order: 'desc',
       search: '',
       search_data: [],
+      product_modal: false
     };
   }
 
@@ -81,17 +87,16 @@ class Home extends Component {
       },
     })
     .then(response => {
-      console.log(response.data);
       this.setState({ 
         entities: response.data,
       });
-      // if (this.props.location.search !== `?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`) {
-      //   this.props.history.push({
-      //     pathname: '/lawyer/promos-and-prizes/my-prizes',
-      //     search: `?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`,
-      //     state: {}
-      //   });
-      // }
+      if (this.props.location.search !== `?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`) {
+        this.props.history.push({
+          pathname: '/',
+          search: `?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`,
+          state: {}
+        });
+      }
     })
     .catch(error =>  {
       console.log(error);
@@ -126,19 +131,45 @@ class Home extends Component {
     return pagesArray;
   }
 
-  tableList() {
+  list() {
     if (this.state.entities.data.length) {
       return this.state.entities.data.map((product) => {
         return (
           <Col key={product.product_id} md={{ span: 4 }}>
-            <Card className="mt-3 mb-3">
-              <Card.Img 
-                variant="top" 
-                src={product.photo}
-              />
-              <Card.Body>
-
+            <Card className="mb-3">
+              <Card.Body
+                onClick={() => {
+                  this.setState({
+                    selected: product,
+                    product_modal: true
+                  });
+                }}>
+                <Card.Img 
+                  variant="top" 
+                  src={product.photo}
+                  className="mb-3"
+                />
+                <Card.Title>{product.name}</Card.Title>
+                <Card.Text>
+                  P{product.price}
+                </Card.Text>
+                <Card.Text>
+                  {truncate(product.description, 40)}
+                </Card.Text>
               </Card.Body>
+              <Card.Footer>
+                <Button 
+                  variant="primary"
+                  onClick={() => {
+                    this.props.dispatch({
+                      type: 'ADD_TO_CART',
+                      payload: product
+                    });
+                  }}
+                  block>
+                  Add to Cart
+                </Button>
+              </Card.Footer>
             </Card>
           </Col>
         );
@@ -146,6 +177,7 @@ class Home extends Component {
     } else {
       return (
         <React.Fragment>
+          <p>No products available</p>
         </React.Fragment>
       )
     }
@@ -162,13 +194,13 @@ class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        <Container>
+        <Container className="mt-3" ref={(ref) => this.main_container = ref}>
           <Row>
-            <Col md={{ span: 8, }}>
+            <Col md={{ span: 12, }}>
               <div className="data-table">
                 <div className="p-3">
                   <Row>
-                    {this.tableList()}
+                    {this.list()}
                   </Row>
                 </div>
                 { 
@@ -200,10 +232,21 @@ class Home extends Component {
                 }
               </div>
             </Col>
-            <Col md={{ span: 4, }}>
-            </Col>
           </Row>
         </Container>
+        <Modal 
+          show={this.state.product_modal} 
+          onHide={() => {
+            this.setState({
+              product_modal: false
+            });
+          }}
+          size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        </Modal>
       </React.Fragment>
     );
   }
