@@ -4,17 +4,20 @@ import React, {
 import {
   connect
 } from 'react-redux';
+import { 
+  LinkContainer 
+} from 'react-router-bootstrap';
 import {
   Container,
   Row,
   Col,
   Card,
   Button,
-  Modal
 } from 'react-bootstrap';
 import axios from 'axios';
 import {
-  truncate
+  truncate,
+  numberWithCommas
 } from './Utils';
 
 let queryString = require('query-string');
@@ -137,26 +140,22 @@ class Home extends Component {
         return (
           <Col key={product.product_id} md={{ span: 4 }}>
             <Card className="mb-3">
-              <Card.Body
-                onClick={() => {
-                  this.setState({
-                    selected: product,
-                    product_modal: true
-                  });
-                }}>
-                <Card.Img 
-                  variant="top" 
-                  src={product.photo}
-                  className="mb-3"
-                />
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>
-                  P{product.price}
-                </Card.Text>
-                <Card.Text>
-                  {truncate(product.description, 40)}
-                </Card.Text>
-              </Card.Body>
+              <LinkContainer to={{ pathname: '/products/'+product.product_id, search: ''}}>
+                <Card.Body>
+                  <Card.Img 
+                    variant="top" 
+                    src={product.photo}
+                    className="mb-3"
+                  />
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>
+                    &#8369;{numberWithCommas(product.price)}
+                  </Card.Text>
+                  <Card.Text>
+                    {truncate(product.description, 40)}
+                  </Card.Text>
+                </Card.Body>
+              </LinkContainer>
               <Card.Footer>
                 <Button 
                   variant="primary"
@@ -234,19 +233,6 @@ class Home extends Component {
             </Col>
           </Row>
         </Container>
-        <Modal 
-          show={this.state.product_modal} 
-          onHide={() => {
-            this.setState({
-              product_modal: false
-            });
-          }}
-          size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        </Modal>
       </React.Fragment>
     );
   }

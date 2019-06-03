@@ -12,11 +12,16 @@ import {
   LinkContainer 
 } from 'react-router-bootstrap';
 import {
+  Container,
   Nav,
   Navbar,
 } from 'react-bootstrap';
 import Home from './Home';
 import Cart from './Cart';
+import Product from './Product';
+import { 
+  FaShoppingCart
+} from 'react-icons/fa';
 
 class App extends Component {
   render() {
@@ -24,18 +29,21 @@ class App extends Component {
       <React.Fragment>
         <Router>
           <div>
-            <Navbar bg="light" expand="lg">
-              <LinkContainer to={'/'}>
-                <Navbar.Brand href="/">Zan3</Navbar.Brand>
-              </LinkContainer>
-              <Navbar.Toggle />
-              <Navbar.Collapse className="justify-content-end">
-                <LinkContainer to={'/cart'}>
-                  <Nav.Link href="/cart">{this.props.cart.length} Cart</Nav.Link>
+            <Navbar bg="danger" expand="lg" fixed="top">
+              <Container>
+                <LinkContainer to={'/'}>
+                  <Navbar.Brand href="/" className="text-light">ZANE STORE</Navbar.Brand>
                 </LinkContainer>
-              </Navbar.Collapse>
+                <Navbar.Toggle />
+                <Navbar.Collapse className="justify-content-end">
+                  <LinkContainer to={'/cart'}>
+                    <Nav.Link href="/cart" className="text-light"><FaShoppingCart /> Cart ({this.props.cart.length})</Nav.Link>
+                  </LinkContainer>
+                </Navbar.Collapse>
+              </Container>
             </Navbar>
             <Route path="/" exact component={Home} />
+            <Route path="/products/:product_id" component={Product} />
             <Route path="/cart" component={Cart} />
           </div>
         </Router>

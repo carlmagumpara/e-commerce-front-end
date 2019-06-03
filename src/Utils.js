@@ -16,3 +16,7 @@ export const checkIfNullOrEmpty = value => {
   }
   return value === '' || value === null || value === 'null' || value === undefined || typeof value === 'undefined';
 };
+
+export const numberWithCommas = integer => {
+    return integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
