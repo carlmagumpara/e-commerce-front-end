@@ -134,7 +134,7 @@ class Home extends Component {
             <Card className="mt-3 mb-3">
               <Card.Img 
                 variant="top" 
-                src={'https://e-commerce-zan3.herokuapp.com/'+product.photo}
+                src={product.photo}
               />
               <Card.Body>
 
@@ -165,44 +165,40 @@ class Home extends Component {
         <Container>
           <Row>
             <Col md={{ span: 8, }}>
-              <Card className="lexmeet__main-card mb-3 shadow-sm" ref={(ref) => this.main_container = ref}>
-                <Card.Body className="p-0">
-                  <div className="data-table">
-                    <div className="p-3">
-                      <Row>
-                        {this.tableList()}
-                      </Row>
-                    </div>
-                    { 
-                      this.state.entities.data &&
-                      <Row className="table-pagination" noGutters>
-                        <Col md={{ span: 6 }} className="mt-1">
-                          <span>Showing {this.state.entities.data.length} of {this.state.entities.total} entries.</span>
-                        </Col>
-                        <Col md={{ span: 6 }} className="mt-1 d-flex justify-content-end">
-                          <ul className="pagination">
-                            <li className="page-item">
-                              <button className="page-link"
-                                disabled={ 1 === this.state.entities.current_page }
-                                onClick={() => this.changePage(this.state.entities.current_page - 1)}>
-                                Previous
-                              </button>
-                            </li>
-                            {this.pageList()}
-                            <li className="page-item">
-                              <button className="page-link"
-                                disabled={this.state.entities.last_page === this.state.entities.current_page}
-                                onClick={() => this.changePage(this.state.entities.current_page + 1)}>
-                                Next
-                              </button>
-                            </li>
-                          </ul>
-                        </Col>
-                      </Row>
-                    }
-                  </div>
-                </Card.Body>
-              </Card>
+              <div className="data-table">
+                <div className="p-3">
+                  <Row>
+                    {this.tableList()}
+                  </Row>
+                </div>
+                { 
+                  this.state.entities.data &&
+                  <Row className="table-pagination" noGutters>
+                    <Col md={{ span: 6 }} className="mt-1">
+                      <span>Showing {this.state.entities.data.length} of {this.state.entities.total} entries.</span>
+                    </Col>
+                    <Col md={{ span: 6 }} className="mt-1 d-flex justify-content-end">
+                      <ul className="pagination">
+                        <li className="page-item">
+                          <button className="page-link"
+                            disabled={ 1 === this.state.entities.current_page }
+                            onClick={() => this.changePage(this.state.entities.current_page - 1)}>
+                            Previous
+                          </button>
+                        </li>
+                        {this.pageList()}
+                        <li className="page-item">
+                          <button className="page-link"
+                            disabled={this.state.entities.last_page === this.state.entities.current_page}
+                            onClick={() => this.changePage(this.state.entities.current_page + 1)}>
+                            Next
+                          </button>
+                        </li>
+                      </ul>
+                    </Col>
+                  </Row>
+                }
+              </div>
             </Col>
             <Col md={{ span: 4, }}>
             </Col>

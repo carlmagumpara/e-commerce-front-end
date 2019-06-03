@@ -1,0 +1,4 @@
+images = https://imgbb.com/
+database = https://remotemysql.com/
+host = heroku
+api = http://e-commerce-zan3.herokuapp.com
