@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { 
+  Component 
+} from 'react';
+import {
+  connect
+} from 'react-redux';
+import { 
+  BrowserRouter as Router, 
+  Route,
+} from 'react-router-dom';
+import { 
+  LinkContainer 
+} from 'react-router-bootstrap';
+import {
+  Nav,
+  Navbar,
+} from 'react-bootstrap';
+import Home from './Home';
+import Cart from './Cart';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Router>
+          <div>
+            <Navbar bg="light" expand="lg">
+              <LinkContainer to={'/'}>
+                <Navbar.Brand href="/">Zan3</Navbar.Brand>
+              </LinkContainer>
+              <Navbar.Toggle />
+              <Navbar.Collapse className="justify-content-end">
+                <LinkContainer to={'/cart'}>
+                  <Nav.Link href="/cart">{this.props.cart.length} Cart</Nav.Link>
+                </LinkContainer>
+              </Navbar.Collapse>
+            </Navbar>
+            <Route path="/" exact component={Home} />
+            <Route path="/cart" component={Cart} />
+          </div>
+        </Router>
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default connect(state => state)(App);
