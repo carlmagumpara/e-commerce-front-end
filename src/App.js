@@ -34,12 +34,11 @@ class App extends Component {
                 <LinkContainer to={'/'}>
                   <Navbar.Brand href="/" className="text-light">ZANE STORE</Navbar.Brand>
                 </LinkContainer>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
+                <Nav className="flex-row float-right">
                   <LinkContainer to={'/cart'}>
                     <Nav.Link href="/cart" className="text-light"><FaShoppingCart /> Cart ({this.props.cart.length})</Nav.Link>
                   </LinkContainer>
-                </Navbar.Collapse>
+                </Nav>
               </Container>
             </Navbar>
             <Route path="/" exact component={Home} />

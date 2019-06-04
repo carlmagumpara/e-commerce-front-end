@@ -64,6 +64,7 @@ class Cart extends Component {
                   <Col md={{ span: 4 }}>
                     <Image 
                       src={this.state.product.photo}
+                      fluid
                     />
                   </Col>
                   <Col md={{ span: 8 }}>

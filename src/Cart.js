@@ -27,7 +27,7 @@ class Cart extends Component {
       <React.Fragment>
         <Container className="mt-3" ref={(ref) => this.main_container = ref}>
           <Card>
-            <Card.Header className="bg-light">
+            <Card.Header className="bg-white">
               Cart
             </Card.Header>
             <Card.Body>
@@ -43,20 +43,21 @@ class Cart extends Component {
                                 <Image 
                                   src={product.photo}
                                   thumbnail
+                                  className="mb-3"
                                 />
                               </Col>
-                              <Col md={{ span: 6, }}>
+                              <Col md={{ span: 5, }}>
                                 <p>{product.name}</p>
                               </Col>
-                              <Col md={{ span: 4, }}>
+                              <Col md={{ span: 5, }}>
                                 <Row>
-                                  <Col md={{ span: 4, }}>
+                                  <Col xs={{ span: 3, }}>
                                     <p>&#8369;{numberWithCommas(product.price)}</p>
                                   </Col>
-                                  <Col md={{ span: 2, }}>
+                                  <Col xs={{ span: 1, }}>
                                     <p>X</p>
                                   </Col>
-                                  <Col md={{ span:4, }}>
+                                  <Col xs={{ span:4, }}>
                                     <NumericInput 
                                       className="form-control" 
                                       min={1} 
@@ -73,7 +74,7 @@ class Cart extends Component {
                                       }}
                                     />
                                   </Col>
-                                  <Col md={{ span: 2, }}>
+                                  <Col xs={{ span: 3, }}>
                                     <Button 
                                       variant="danger"
                                       onClick={() => {
@@ -81,7 +82,8 @@ class Cart extends Component {
                                           type: 'REMOVE',
                                           payload: product
                                         });
-                                      }}>
+                                      }}
+                                      block>
                                       <FaTrash />
                                     </Button>
                                   </Col>
@@ -98,7 +100,7 @@ class Cart extends Component {
                 )
               }
             </Card.Body>
-              <Card.Footer className="text-right bg-light d-flex justify-content-end">
+              <Card.Footer className="text-right bg-white d-flex justify-content-end">
                 <p className="mb-0">
                   Total Price: &#8369;{numberWithCommas(this.props.cart.reduce((total, product) => total + (parseInt(product.price, 10) * product.total) , 0))}
                 </p>
